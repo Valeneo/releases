@@ -32,7 +32,7 @@ mkdir -p "$C/pool/$channel/$product/$tag"; cp "${debs[@]}" "$C/pool/$channel/$pr
 if [ ! -d "$C/repo/.git" ]; then
   git clone -q --branch repo "https://github.com/$GH.git" "$C/repo" 2>/dev/null || {
     git clone -q "https://github.com/$GH.git" "$C/repo"; git -C "$C/repo" checkout -q --orphan repo; git -C "$C/repo" rm -rqf . || true; }
-else git -C "$C/repo" pull -q --ff-only || true; fi
+else git -C "$C/repo" pull -q --ff-only origin repo; fi
 
 build_suite() { # suite channels...
   local suite=$1; shift; local t; t=$(mktemp -d)

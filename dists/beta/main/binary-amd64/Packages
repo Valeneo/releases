@@ -1,0 +1,12 @@
+Package: valeneo-test
+Architecture: amd64
+Version: 0.0.1~beta.1
+Maintainer: Valeneo <releases@valeneo.space>
+Filename: pool/valeneo-test/valeneo-test-v0.0.1-beta.1/valeneo-test_0.0.1~beta.1_amd64.deb
+Size: 700
+MD5sum: 92fd9baa7a03814f74d1e2b1c94ba1e0
+SHA1: 7e9d0123bf1a19de8545538e0bd207e3b4bce7c7
+SHA256: 06f2f4e0c40481fa0fc5bfb29d58b759fd7c21107326ef66a7de6b6f78abcb71
+SHA512: 69006805d0b30b771924d30df4ff4cb12ae3648ada25f0bcfc761309151f6291a2b7c899ed5e77195995dc16736b1f6a38717e6de3a96ddae45e40374859d53e
+Description: Throwaway test package for the apt pipeline
+

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Publish a release: GitHub Release (all artifacts) + signed apt index (for .deb files).
+# Publish a release: GitHub Release (all artifacts) + signed apt index (.deb) + signed rpm repo (.rpm).
 # Usage: publish.sh <product> <version> <stable|beta> <file>...
 # Binaries live only on GitHub Releases. The apt index lives on the `repo` branch and is
 # served by repository.valeneo.space (nginx proxies the index to GitHub, redirects pool/ to releases).
@@ -16,6 +16,24 @@ export GNUPGHOME=$K/gnupg
 FPR=$(cat "$K/fingerprint")
 gpgsign() { gpg --batch --yes --pinentry-mode loopback --passphrase-file "$K/passphrase" -u "$FPR" "$@"; }
 
+# 0. sign .rpm files (copies, originals untouched) with the RSA rpm key
+RF=$(cat "$K/rpm-fingerprint")
+rpmtool() { docker run --rm -v "$K/gnupg:/gnupg:ro" -v "$K/passphrase:/pw:ro" "$@"; }
+if printf '%s\n' "$@" | grep -q '\.rpm$'; then
+  SIGNDIR=$(mktemp -d); args=()
+  for f in "$@"; do
+    if [[ $f == *.rpm ]]; then cp "$f" "$SIGNDIR/"; args+=("$SIGNDIR/$(basename "$f")"); else args+=("$f"); fi
+  done
+  docker run --rm -v "$SIGNDIR:/rpms" -v "$K/gnupg:/gnupg-ro:ro" -v "$K/passphrase:/pw:ro" valeneo-rpmtools bash -c '
+    cp -r /gnupg-ro /root/gnupg && export GNUPGHOME=/root/gnupg && chmod 700 /root/gnupg
+    cat > /root/.rpmmacros <<M
+%_gpg_name '"$RF"'
+%__gpg_sign_cmd %{__gpg} gpg --batch --no-verbose --no-armor --pinentry-mode loopback --passphrase-file /pw --no-secmem-warning -u "%{_gpg_name}" -sbo %{__signature_filename} --digest-algo sha256 %{__plaintext_filename}
+M
+    rpmsign --addsign /rpms/*.rpm'
+  set -- "${args[@]}"
+fi
+
 # 1. GitHub release
 flags=(); [ "$channel" = beta ] && flags+=(--prerelease)
 if gh release view "$tag" --repo "$GH" >/dev/null 2>&1; then
@@ -25,9 +43,11 @@ else
 fi
 
 # 2. apt index (only if there are .debs)
-debs=(); for f in "$@"; do [[ $f == *.deb ]] && debs+=("$f"); done
-[ ${#debs[@]} -gt 0 ] || exit 0
-mkdir -p "$C/pool/$channel/$product/$tag"; cp "${debs[@]}" "$C/pool/$channel/$product/$tag/"
+debs=(); rpms=()
+for f in "$@"; do [[ $f == *.deb ]] && debs+=("$f"); [[ $f == *.rpm ]] && rpms+=("$f"); done
+[ ${#debs[@]} -gt 0 ] || [ ${#rpms[@]} -gt 0 ] || exit 0
+if [ ${#debs[@]} -gt 0 ]; then mkdir -p "$C/pool/$channel/$product/$tag"; cp "${debs[@]}" "$C/pool/$channel/$product/$tag/"; fi
+if [ ${#rpms[@]} -gt 0 ]; then mkdir -p "$C/rpmpool/$channel/$product/$tag"; cp "${rpms[@]}" "$C/rpmpool/$channel/$product/$tag/"; fi
 
 if [ ! -d "$C/repo/.git" ]; then
   git clone -q --branch repo "https://github.com/$GH.git" "$C/repo" 2>/dev/null || {
@@ -52,8 +72,27 @@ build_suite() { # suite channels...
   gpgsign -abs -o "$t/dists/$suite/Release.gpg" "$t/dists/$suite/Release"
   rm -rf "$C/repo/dists/$suite"; mkdir -p "$C/repo/dists"; mv "$t/dists/$suite" "$C/repo/dists/$suite"; rm -rf "$t"
 }
+if [ ${#debs[@]} -gt 0 ]; then
 build_suite stable stable
 build_suite beta stable beta
+fi
+
+build_rpm() { # channel channels...
+  local ch=$1; shift; local t; t=$(mktemp -d); mkdir -p "$t/pool"
+  for c in "$@"; do [ -d "$C/rpmpool/$c" ] && cp -a "$C/rpmpool/$c/." "$t/pool/"; done
+  docker run --rm -v "$t:/r" -v "$K/gnupg:/gnupg-ro:ro" -v "$K/passphrase:/pw:ro" valeneo-rpmtools bash -c '
+    cp -r /gnupg-ro /root/gnupg && export GNUPGHOME=/root/gnupg && chmod 700 /root/gnupg
+    cd /r && createrepo_c -q --no-database .
+    gpg --batch --yes --pinentry-mode loopback --passphrase-file /pw -u '"$RF"' --detach-sign --armor repodata/repomd.xml
+    chown -R '"$(id -u):$(id -g)"' /r' 2>&1 | grep -v 'not a symlink' || true
+  rm -rf "$C/repo/rpm/$ch"; mkdir -p "$C/repo/rpm/$ch"; mv "$t/repodata" "$C/repo/rpm/$ch/repodata"
+  find "$t" -mindepth 1 -delete 2>/dev/null; rm -rf "$t"
+}
+if [ ${#rpms[@]} -gt 0 ]; then
+build_rpm stable stable
+build_rpm beta stable beta
+fi
+cp "$K/valeneo-rpm.asc" "$C/repo/"
 cp "$K/valeneo.gpg" "$K/valeneo.asc" "$C/repo/"
 git -C "$C/repo" add -A
 git -C "$C/repo" -c user.name=Valeneo -c user.email=releases@valeneo.space commit -qm "apt index: $tag ($channel)" || true

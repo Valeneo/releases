@@ -7,7 +7,7 @@ Package-manager repos only index or point at those assets, nothing is stored on 
 | Platform | Channel |
 |---|---|
 | Debian / Ubuntu | apt, `https://repository.valeneo.space` (live) |
-| Fedora / openSUSE | rpm repo (planned) |
+| Fedora / RHEL / openSUSE | rpm, `https://repository.valeneo.space/rpm/stable` (live; see landing page for the .repo file) |
 | Windows | winget / Scoop (planned) |
 | macOS | Homebrew cask (planned) |
 

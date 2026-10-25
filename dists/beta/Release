@@ -1,0 +1,27 @@
+Architectures: amd64 arm64
+Codename: beta
+Components: main
+Date: Sun, 25 Oct 2026 17:02:15 +0000
+Label: Valeneo
+Origin: Valeneo
+Suite: beta
+MD5Sum:
+ da4ab65ab59cbc178015244716e20a3f              880 main/binary-amd64/Packages
+ cb173c5806232ae70a82fea7136a7951              590 main/binary-amd64/Packages.gz
+ d41d8cd98f00b204e9800998ecf8427e                0 main/binary-arm64/Packages
+ 4a4dd3598707603b3f76a2378a4504aa               20 main/binary-arm64/Packages.gz
+SHA1:
+ 887a422c362f24d27916f7e60de0411db5e7e265              880 main/binary-amd64/Packages
+ 5758b858c2f9dc1e1a5df3c3f8d6e4aa669f2d6b              590 main/binary-amd64/Packages.gz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 main/binary-arm64/Packages
+ a0fddd5458378c1bf3c10dd2f5c060d1347741ed               20 main/binary-arm64/Packages.gz
+SHA256:
+ 1f34e7158dff41d703906dd835c85e9b5a912084cf6504ffff350e44b66ed653              880 main/binary-amd64/Packages
+ 83f5b696269633b45acb8ae5c4f8f19f186a798458d334007d325f1541a828e0              590 main/binary-amd64/Packages.gz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 main/binary-arm64/Packages
+ f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec               20 main/binary-arm64/Packages.gz
+SHA512:
+ 573594df41c10b55dfd34944a6ee5bbcc34e9c69dbd8e2f42fd23e7143b985fca56f584d91570b3bad1e4d0d4a4658cdf53bd5392156bf40247c53e2e8a38ab2              880 main/binary-amd64/Packages
+ 636e8d3be7f55080dcac13348dc19b34badaa30bdeb9466cb4ff9195d790b7cba793ee6e77ea5a5005e837eebcb8454880591d27a4fd128df7a00dfd57a1721c              590 main/binary-amd64/Packages.gz
+ cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e                0 main/binary-arm64/Packages
+ 1b46b9b08d5b338be9d732a1724795b2eab63daffde377218727c90857b79fe6a47bceed495117fcde60f7339812ef75ef4c69f82dd79fb69b6cbf8006b521f2               20 main/binary-arm64/Packages.gz

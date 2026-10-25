@@ -1,0 +1,16 @@
+Package: vectis
+Architecture: amd64
+Version: 0.3.1~beta.9
+Priority: optional
+Maintainer: Valeneo
+Installed-Size: 10289
+Depends: libwebkit2gtk-4.1-0, libgtk-3-0
+Filename: pool/vectis/vectis-v0.3.1-beta.9/Vectis_0.3.1~beta.9_amd64.deb
+Size: 3013304
+MD5sum: 045505c56bc5562dd0bbd719baaccb98
+SHA1: 04489b54718110a78ec422d2e4fc6267bb296673
+SHA256: 8c2f42663c0643d9aeb8107df356fa7032843bdeff26e7a65812bdb6f836c791
+SHA512: 61169cf210a1357c7b1af0b931270df32a0c4cf420094bdd465282cb718a8002ff5515b5f25460eb974245c6af604d8d3231dfbed8ae6465c2c46e8b0c9b92e8
+Description: Run bioinformatics tools and design R charts from plain forms.
+ Vectis lets you chain bioinformatics tools into linear pipelines, run no-code R analyses (DESeq2) and design ggplot2 charts from forms, on your own computer. Every command and every R script stays visible. Developed by Valeneo, powered by Systems and Sage.
+

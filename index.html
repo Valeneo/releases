@@ -15,6 +15,7 @@ a{color:var(--accent);text-underline-offset:3px}
 pre{background:rgba(201,168,76,.05);border:.5px solid var(--border);border-radius:2px;padding:1rem;overflow-x:auto;font:400 13px/1.7 'DM Mono',monospace;color:var(--text);white-space:pre}
 code{font:400 .8em 'DM Mono',monospace;color:var(--accent-lt)}
 .label{font:400 11px 'DM Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+table{width:100%;border-collapse:collapse;font:400 13px/1.6 'DM Mono',monospace}th,td{text-align:left;padding:.5rem .6rem;border-bottom:.5px solid var(--border);vertical-align:top}th{color:var(--accent);font-weight:500}.tag{border:.5px solid var(--accent);color:var(--accent);padding:0 .4rem;border-radius:2px;font-size:11px}td a{display:block}
 </style></head>
 <body><main>
 <div class="label">repository.valeneo.space</div>
@@ -27,6 +28,8 @@ curl -fsSL https://repository.valeneo.space/valeneo.gpg | sudo tee /etc/apt/keyr
 echo "deb [signed-by=/etc/apt/keyrings/valeneo.gpg] https://repository.valeneo.space stable main" | sudo tee /etc/apt/sources.list.d/valeneo.list
 sudo apt update</pre>
 <p>Key fingerprint: <code>AAF4 FBB3 4FC9 444A 94A9 65B3 E069 B7DF D907 46C1</code></p>
+<h2>Releases</h2>
+<table><tr><th>Release</th><th>Date</th><th>Files</th></tr><tr><td>vectis 0.3.1-beta.9 <span class="tag">beta</span></td><td>2026-10-25</td><td><a href="https://github.com/Valeneo/releases/releases/download/vectis-v0.3.1-beta.9/SHA256SUMS.txt">SHA256SUMS.txt</a><a href="https://github.com/Valeneo/releases/releases/download/vectis-v0.3.1-beta.9/vectis-0.3.1-0.beta.9.x86_64.rpm">vectis-0.3.1-0.beta.9.x86_64.rpm</a><a href="https://github.com/Valeneo/releases/releases/download/vectis-v0.3.1-beta.9/Vectis_0.3.1.beta.9_amd64.deb">Vectis_0.3.1.beta.9_amd64.deb</a></td></tr></table>
 <h2>Fedora, RHEL, openSUSE (rpm)</h2>
 <pre>sudo tee /etc/yum.repos.d/valeneo.repo &lt;&lt;'EOF'
 [valeneo]

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Valeneo package repository</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap">
+<style>
+:root{--bg:#0e0c08;--text:#e8dfc8;--textmid:#a8966a;--accent:#c9a84c;--accent-lt:#e8c97a;--border:rgba(201,168,76,.15)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:300 18px/1.65 'Crimson Pro',serif}
+main{max-width:46rem;margin:0 auto;padding:4rem 16px}
+h2{font:600 1.4rem/1.3 'Playfair Display',serif;margin:2.5rem 0 .8rem;color:var(--accent-lt)}
+h1{font:600 2.4rem/1.2 'Playfair Display',serif;margin:0 0 1rem;color:var(--accent-lt)}
+p{color:var(--textmid)}
+a{color:var(--accent);text-underline-offset:3px}
+pre{background:rgba(201,168,76,.05);border:.5px solid var(--border);border-radius:2px;padding:1rem;overflow-x:auto;font:400 13px/1.7 'DM Mono',monospace;color:var(--text);white-space:pre}
+code{font:400 .8em 'DM Mono',monospace;color:var(--accent-lt)}
+.label{font:400 11px 'DM Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+table{width:100%;border-collapse:collapse;font:400 13px/1.6 'DM Mono',monospace}th,td{text-align:left;padding:.5rem .6rem;border-bottom:.5px solid var(--border);vertical-align:top}th{color:var(--accent);font-weight:500}.tag{border:.5px solid var(--accent);color:var(--accent);padding:0 .4rem;border-radius:2px;font-size:11px}td a{display:block}
+</style></head>
+<body><main>
+<div class="label">repository.valeneo.space</div>
+<h1>Valeneo package repository</h1>
+<p>Signed apt repository for Valeneo software on Debian and Ubuntu. Downloads are served from
+<a href="https://github.com/Valeneo/releases/releases">GitHub Releases</a>. Overview and product list on
+<a href="https://valeneo.space/repository.html">valeneo.space</a>.</p>
+<pre>sudo install -d /etc/apt/keyrings
+curl -fsSL https://repository.valeneo.space/valeneo.gpg | sudo tee /etc/apt/keyrings/valeneo.gpg &gt;/dev/null
+echo "deb [signed-by=/etc/apt/keyrings/valeneo.gpg] https://repository.valeneo.space stable main" | sudo tee /etc/apt/sources.list.d/valeneo.list
+sudo apt update</pre>
+<p>Key fingerprint: <code>AAF4 FBB3 4FC9 444A 94A9 65B3 E069 B7DF D907 46C1</code></p>
+<h2>Releases</h2>
+{{RELEASES}}
+<h2>Fedora, RHEL, openSUSE (rpm)</h2>
+<pre>sudo tee /etc/yum.repos.d/valeneo.repo &lt;&lt;'EOF'
+[valeneo]
+name=Valeneo
+baseurl=https://repository.valeneo.space/rpm/stable
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://repository.valeneo.space/valeneo-rpm.asc
+EOF
+sudo dnf install &lt;package&gt;</pre>
+<p>rpm key fingerprint: <code>474A 759D FAB7 1F94 AFF0 4B66 89BC 74AB 4D5B 3AE1</code></p>
+</main></body></html>

@@ -93,6 +93,7 @@ build_rpm stable stable
 build_rpm beta stable beta
 fi
 cp "$K/valeneo-rpm.asc" "$C/repo/"
+"$(dirname "$0")/render-index.py" "$(dirname "$0")/index.tmpl.html" "$C/repo/index.html"
 cp "$K/valeneo.gpg" "$K/valeneo.asc" "$C/repo/"
 git -C "$C/repo" add -A
 git -C "$C/repo" -c user.name=Valeneo -c user.email=releases@valeneo.space commit -qm "apt index: $tag ($channel)" || true

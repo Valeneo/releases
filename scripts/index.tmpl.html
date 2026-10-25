@@ -21,8 +21,7 @@ table{width:100%;border-collapse:collapse;font:400 13px/1.6 'DM Mono',monospace}
 <div class="label">repository.valeneo.space</div>
 <h1>Valeneo package repository</h1>
 <p>Signed apt repository for Valeneo software on Debian and Ubuntu. Downloads are served from
-<a href="https://github.com/Valeneo/releases/releases">GitHub Releases</a>. Overview and product list on
-<a href="https://valeneo.space/repository.html">valeneo.space</a>.</p>
+<a href="https://github.com/Valeneo/releases/releases">GitHub Releases</a>.</p>
 <pre>sudo install -d /etc/apt/keyrings
 curl -fsSL https://repository.valeneo.space/valeneo.gpg | sudo tee /etc/apt/keyrings/valeneo.gpg &gt;/dev/null
 echo "deb [signed-by=/etc/apt/keyrings/valeneo.gpg] https://repository.valeneo.space stable main" | sudo tee /etc/apt/sources.list.d/valeneo.list
